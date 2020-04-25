@@ -16,4 +16,4 @@ Success chances can also be affected by character state, environment, enemy stat
 
 Depending on the success chance and roll, an outcome is decided. 
 
-Once an outcome has been reached, the relevant effects can be applied. You can think of an outcome as a grouping of effects.
+Outcomes are groups of effects, so once the right outcome is chosen, all of the effects specified by it will be applied to the the target of the outcome.
