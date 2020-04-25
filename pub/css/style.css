@@ -1,0 +1,88 @@
+:root {
+    --window-width:1300px;
+    --pixel-width:9px;
+    --pixel-height:16px;
+}
+
+@font-face{
+    font-family: 'VGA';
+    src: url('../font/vga.woff');
+}
+
+body {
+    background-color: black;
+}
+
+.pixel-container{
+    display: inline-block;
+    width: var(--pixel-width);
+    height: var(--pixel-height);
+}
+
+.pixel { 
+    font-family: 'VGA';
+    display: block;
+    padding: 0px;
+    margin: -0.3px;
+    position: relative;
+    top: 0px;
+    left:0px;
+    width: var(--pixel-width);
+    height: var(--pixel-height);
+}
+
+.subpixel-container { 
+    display: block;
+    position: relative;
+    top: calc(var(--pixel-height) * -1);
+    left: 0px;
+    bottom:0px;
+    left: 0px;
+    z-index: -1;
+    width: var(--pixel-width);
+    height: var(--pixel-height);
+}
+
+.subpixel {
+    font-family: 'VGA';
+    display: block;
+    padding:0px;
+    margin: -0.3px;
+    width: calc(var(--pixel-width)/2);
+    height: calc(var(--pixel-height)/2);
+}
+
+.subpixel0{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.subpixel1{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+.subpixel2{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+}
+.subpixel3{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+
+.game{
+    display: block;
+    margin: auto;
+    width: var(--window-width);
+    font-size: var(--pixel-height);
+}
+
+.row {
+    display: block;
+    padding:0px;
+    margin:0px;
+
+}
