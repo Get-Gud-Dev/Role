@@ -35,3 +35,6 @@ Players with high charm, low wisdom, or low resolve have a higher social imperit
 Committing antisocial acts will fill in your loneliness but comes with side effects.
 
 The first is you're likely to be branded a criminal. The other thing that can happen is a drift into insanity or the emergence of a new imperitive: BloodLust
+
+Low rolls are performed against Resolve when you kill something. If you fail the roll, your social need will increase, killing too much when you are in dire need of socialization will leave you Desensitized. Frustrating situations may cause you to respond with violence in a desensitized state.
+
