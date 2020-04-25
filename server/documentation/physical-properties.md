@@ -1,8 +1,8 @@
-# Weight
+# Mass
 
-Weight is a property of an entity, it is measured in kilograms.
+Mass is a property of an entity, it is measured in kilograms.
 
-Going above your carry weight inflicts encumbrance penalties, reductions to STA, AGI, DEX.
+Going above your carry **weight** inflicts encumbrance penalties, reductions to STA, AGI, DEX.
 
 # Volume
 
