@@ -5,7 +5,7 @@ Going back graphically in hopes of getting back some control. Role seeks to give
 ## Development Stage [Dev Roadmap](ROADMAP.md)
 
 ### Abstract Design
-Current stage of development with the game engine is **abstract design**
+Current stage of development with the game engine is **abstract design** basically that means that I just make stuff up with no regard to limitations or possibilities or my future sanity.
 
 * See the documentation for this stage of development at [abstract design](1-abstract-design/README.md)
 
@@ -17,3 +17,4 @@ Rendering engine is a trial by fire being tested and modified slowly and painful
 
  
 **[Contribute](CONTRIBUTING.md)**
+
