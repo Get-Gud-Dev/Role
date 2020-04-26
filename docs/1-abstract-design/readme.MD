@@ -39,4 +39,9 @@ The [description](components/description.md) component configures the top level 
 Horses would be a fine example of an appropriate vehicular character.
 
 #### Container
-[Containers](components/container.md) hold things. 
+
+[Containers](components/container.md) hold things. The largest dimension that can fit inside of it is determined by the smallest dimension of the container and that there is enough volume in the container to hold it.
+
+#### Weapon
+
+Weapons may be usable in different ways 

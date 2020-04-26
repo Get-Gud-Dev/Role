@@ -10,4 +10,4 @@ When bards are playing, characters are free to browse their collection of music 
 
 ## Questing
 
-Bards record and catelog things that have happened and another way of interpreting bardsong is finding new adventures
+Another way to use a bard is to draw quest inspiration from the stories
