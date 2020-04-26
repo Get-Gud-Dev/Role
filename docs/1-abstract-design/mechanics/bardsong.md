@@ -23,10 +23,10 @@ Epic Tales are recountings of great events that have happened. Hearing these tal
 
 # Encountering a Barded Character
 
-## Build-Augment
+## Augment Building
 
 When bards are playing, characters are free to browse their collection of music (tales, pieces of entertainment) to put together a particular set of [effects](effects.md) they are after. Enjoying the song and feelings its effects costs the listener a bit of [Karma](karma.md), so it is in their best interest to stick around for a bit and enjoy some other songs before taking off with the [augmentation](augmentation.md).
 
-## Questing
+## Quest Building
 
-Another way to use a bard is to draw quest inspiration from the stories that you see. 
+Another way to use a bard is to draw quest inspiration from the stories that are available. Either by taking a tale in complete or mixing and matching elements, new quests can be forged.

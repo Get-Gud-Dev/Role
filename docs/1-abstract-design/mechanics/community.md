@@ -1,7 +1,7 @@
 # Levels of Community
 *return to [Game Mechanics](README.md)*
 
-One way to categorize communities, but not an entirely correct way is by number of inhabitants. This is a count of player operated characters and NPC's.
+One way to categorize communities, but not an entirely correct way is by number of inhabitants. This is a count of player operated characters and NPC's. 
 
 ## Friendship (1-1)
 
@@ -71,3 +71,15 @@ A metropolis must have everything and the people to back it. Metropolis may be c
 - At least two complete caravan services that offer access to the global market
 - Full medical services (Hospital with staff trained in a medical branch)
 - Significant justice services, a legal process and a system of laws a guard staff of 1 for every 25 citizens.
+
+# Embedded Communities
+
+There are also communities that exist embedded within another community.
+
+## Embassy
+
+Cities or larger are able to create embassies in other areas. Having an embassy enables commercial transport to come and go from that location.
+
+## Guild hall
+
+Guild Halls can be established in any size community. Having resident guilds grant the city with guild specialty specific bonuses.
