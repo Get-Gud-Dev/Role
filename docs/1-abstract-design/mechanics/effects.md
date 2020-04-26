@@ -1,4 +1,5 @@
 # Effects
+*return to [Game Mechanics](README.md)*
 
 Effects are hard-coded things that can happen to an entity. 
 

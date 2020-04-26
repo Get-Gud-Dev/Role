@@ -1,4 +1,5 @@
 # Pools
+*return to [Game Mechanics](README.md)*
 
 GGMud does not allow the creation of new pools, but it offers a wide array of pools for new talents and skills to be based on and utilize in different situations.
 

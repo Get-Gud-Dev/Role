@@ -1,4 +1,5 @@
 # Story Weaving
+*return to [Game Mechanics](README.md)*
 
 Roleplaying is all about creating stories, this can be difficult in a world that doesn't listen.
 

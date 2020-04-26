@@ -1,4 +1,5 @@
 # Creation
+*return to [Game Mechanics](README.md)*
 
 Role Players are given the gift of creation. Nearly all elements of gameplay are within the sphere of player control should they desire it. 
 

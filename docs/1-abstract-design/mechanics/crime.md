@@ -1,4 +1,5 @@
 ## Criminal Behaviour
+*return to [Game Mechanics](README.md)*
 
 Extreme enough acts will be witnessed by any characters in line of sight. If they can, they will report you to local authorities.
 

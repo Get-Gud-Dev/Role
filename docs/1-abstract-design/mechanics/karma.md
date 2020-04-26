@@ -1,4 +1,5 @@
 # Karma
+*return to [Game Mechanics](README.md)*
 
 Karma is a part of the social system and it matters to everyone. Selfish acts tend to reduce your Karma and Selfless tend to increase it. Karmic relationships are generally patronages. Where one individual is providing a service for another. These kinds of relationships will factor in karma.
 

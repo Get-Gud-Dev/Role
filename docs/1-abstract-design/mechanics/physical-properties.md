@@ -1,10 +1,15 @@
-# Mass
+# Physical Properties
+*return to [Game Mechanics](README.md)*
+
+All objects that manifest in the world have physical properties. These properties are often used to determine what you are able to do with the object.
+
+## Mass
 
 Mass is a property of an entity, it is measured in kilograms.
 
 Going above your carry **weight** inflicts encumbrance penalties, reductions to STA, AGI, DEX.
 
-# Volume
+## Volume
 
 Size is a property of an entity, it is measured in meters cubed.
 

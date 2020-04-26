@@ -9,12 +9,12 @@ Role relies on having a variety of game mechanics designed to interplay.
 
 Actions are a characters way of exerting their influence on the world.
 
-Actions consist of a roll for success (which may be implied succes) and effects which carry out depending on tha nature of the roll.
+Actions consist of a roll for success (which may be implied succes) and [effects](effects.md) which carry out depending on tha nature of the roll.
 
 ### Augmentation
 *Article [Augmentation](augmentation.md)*
 
-Augmentations are the application of effects to a character for some duration or under some condition.
+Augmentations are the application of [effects](effects.md) to a character for some duration or under some condition.
 
 ### Bardsong
 *Article [Bardsong](bardsong.md)*
@@ -25,11 +25,6 @@ Bardsong is not necessarily literal bardsong but mechanics that allow news of pl
 *Article [Community](community.md)*
 
 Community describes the levels of grouping or 'guilding' that players are able to work with.
-
-### Craft
-*Article [Craft](craft.md)*
-
-Some items are created to be craftable.
 
 ### Creation
 *Article [Creation](creation.md)*
@@ -98,3 +93,7 @@ Skills are a measure of how good you are at something.
 ### Story
 *Article [Story](story.md)*
 
+### Trades
+*Article [Craft](trades.md)*
+
+Some items are created to be craftable and the people who create them are called tradespeople.

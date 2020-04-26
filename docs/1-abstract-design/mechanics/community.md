@@ -1,10 +1,11 @@
 # Levels of Community
+*return to [Game Mechanics](README.md)*
 
 One way to categorize communities, but not an entirely correct way is by number of inhabitants. This is a count of player operated characters and NPC's.
 
 ## Friendship (1-1)
 
-There are degrees here. People you have positive social actions with gradually become your friends
+There are degrees here. People you have positive [social](social.md) actions with gradually become your friends
 
 ## Patronage (1-1)
 

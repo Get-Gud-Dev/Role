@@ -1,4 +1,5 @@
 # Imperitives
+*return to [Game Mechanics](README.md)*
 
 ## Needs
 

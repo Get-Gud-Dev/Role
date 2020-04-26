@@ -1,4 +1,5 @@
 # Rolls
+*return to [Game Mechanics](README.md)*
 
 There are four basic outcomes to any roll:
 
