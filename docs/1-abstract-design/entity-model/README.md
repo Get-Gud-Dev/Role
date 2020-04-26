@@ -1,5 +1,6 @@
-## Entity
-*Article [entity](entity.md)*
+## Entity Model
+*return to [Game Mechanics](README.md)*
+
 
 An [entity](entity.md) is an object that exists in space. It is really just an empty container that has a location.
 
