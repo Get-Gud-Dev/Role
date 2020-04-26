@@ -58,6 +58,7 @@ Depending on the size and purpose of the map, you will need to make certain prep
 Each aspect of creation should have a custom built tool, and these tools should feel as though they are a part of the game.
 
 ### Map Making
+**Article [Map Tools](map-tools.md)**
 
 Players create maps using the built in editor.
 
@@ -72,3 +73,5 @@ Map data is modifiable on the following levels:
 
 ### Quest Building
 
+### Drawing
+**Article [Paint Tools](paint-tools.md)**

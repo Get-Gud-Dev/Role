@@ -1,6 +1,11 @@
 # Rolls
 *return to [Game Mechanics](README.md)*
 
+## Rolling and 20's
+Player stats are based on a system of 20 and rolls are performed between 1-20. This creates a nice mapping between the dice roll and the character's stats and gives a very intuitive reference for how skilled an enemy is in a particular area.
+
+
+## Outcomes
 There are four basic outcomes to any roll:
 
 Critical Failure, Cricital Success, failure and success.

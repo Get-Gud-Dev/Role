@@ -16,5 +16,5 @@ Rendering engine is a trial by fire being tested and modified slowly and painful
  [engine design](2-engine-design/README.md).
 
  
-**[Contribute](CONTRIBUTING.md)**
+**Want to help? [Contribute](CONTRIBUTING.md)**
 
