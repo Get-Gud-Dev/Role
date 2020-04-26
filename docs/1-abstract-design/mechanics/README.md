@@ -22,6 +22,12 @@ Augmentation
 ### Community
 *Article [Community](community.md)*
 
+### Craft
+*Article [Craft](craft.md)*
+
+### Creation
+*Article [Creation](creation.md)*
+
 ### Crime
 *Article [Crime](crime.md)*
 
@@ -39,6 +45,9 @@ Augmentation
 
 ### Karma
 *Article [Karma](karma.md)*
+
+### Physical Properties
+*Article [Physical Properties](physical-properties.md)*
 
 ### Pools
 *Article [Pools](pools.md)*
