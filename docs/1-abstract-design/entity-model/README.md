@@ -23,6 +23,5 @@ Entity components attach to entities and give them additional behaviour. Compone
 | Text | [Text](../components/text.md) components offer a much larger canvas to write on and can be used for long inscriptions, book texts, and other long format forms of expression. |
 | Vehice | [Vehicles](components/vehicle.md) require an [Engine](components/engine.md) which requires Fuel. |
 | Engine | [Engines](components/engine.md) provide torque that give force to vehicles. |
-| Container | [Containers](components/container.md) hold things. The largest dimension that can fit inside of it is determined by the smallest dimension of the container and that there is enough volume in the container to hold it.
- |
+| Container | [Containers](components/container.md) hold things. The largest dimension that can fit inside of it is determined by the smallest dimension of the container and that there is enough volume in the container to hold it. |
 | Weapon | Weapons may be usable in different ways to deal [different types](mechanics/damage-types.md) of damage or rely on different [skills](mechanics/skills.md). |
