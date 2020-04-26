@@ -28,7 +28,7 @@ Bardsong is not necessarily literal bardsong but mechanics that allow news of pl
 Community describes the levels of grouping or 'guilding' that players are able to work with.
 
 ### Creation
-*Article [Creation](creation.md)*
+*Article [Creation](creation/README.md)*
 
 Creation describes a set of mechanics and tools related to the creative aspects of Role. The main objective of creative mechanics is to give the player a hand in every other mechanic to create content with.
 
