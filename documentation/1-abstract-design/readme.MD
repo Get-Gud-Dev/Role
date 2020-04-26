@@ -9,7 +9,10 @@ It is to be thought of as the guiding principle for deriving the solid game mech
 
 An [entity](entity.md) is an object that exists in space. It is really just an empty container that has a location.
 
-Entities also must have physical properties, however these are not determined by the player but rather by the components that make up the entity.
+Entities also must have [physical properties](physical-properties.md), however these are not determined by the player but rather by the components that make up the entity.
+
+**Negative space** is the amount of space an entity is allowed to use as a container. This is expressed as a percentage of the total volume and it is limited by the following factors:
+
 
 ## Components
 
@@ -34,3 +37,6 @@ The [description](components/description.md) component configures the top level 
 [Vehicles](components/vehicle.md) and [Engines](components/engine.md) are a means of creating fueled transport. Characters and vehicles mix however vehicular travel relies on some kind of engine and that engine relies on some kind of fuel and this must be considered.
 
 Horses would be a fine example of an appropriate vehicular character.
+
+#### Container
+[Containers](components/container.md) hold things. 
