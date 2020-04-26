@@ -4,25 +4,33 @@ This section of the documentation describes the game in markety terms and uses m
 
 It is to be thought of as the guiding principle for deriving the solid game mechanics.
 
-## Section 1: Introduction
-
-The first section covers the most basic elements that make up the game and then uses those to build the core RPG elements.
-
-### Entity
+## Entity
 *Article [entity](entity.md)*
 
 An [entity](entity.md) is an object that exists in space. It is really just an empty container that has a location.
 
 Entities also must have physical properties, however these are not determined by the player but rather by the components that make up the entity.
 
-### Components
+## Components
 
 Entity components attach to entities and give them additional behaviour. Components can have user configurable properties and should stack and work with one another when attached to the same entity where applicable.
 
+### Major examples of components
+
 #### Character
 
-Initializing an entity with a [character](character.md) gives it a stat engine and a locomotion system.
+Initializing an entity with a [character](components/character.md) gives it a stat engine and a locomotion system.
 
-Characters are also able to accept [Drivers](driver.md)
+Characters are also able to accept [Drivers](components/driver.md)
 
+#### Description, Details, Text
 
+The [description](components/description.md) component configures the top level description of an entity, the first thing you see about it. [Details](components/detail.md) allow you to add small tagged descriptions to your entity.
+
+[Text](components/text.md) components offer a much larger canvas to write on and can be used for long inscriptions, book texts, and other long format forms of expression.
+
+#### Vehicle, Engine
+
+[Vehicles](components/vehicle.md) and [Engines](components/engine.md) are a means of creating fueled transport. Characters and vehicles mix however vehicular travel relies on some kind of engine and that engine relies on some kind of fuel and this must be considered.
+
+Horses would be a fine example of an appropriate vehicular character.
