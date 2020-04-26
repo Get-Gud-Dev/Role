@@ -5,8 +5,20 @@ Bard Song is not literally the song of bards, it is an outlet to the news and co
 
 Barding is a [social](social.md) activity and requires heavily advanced INT, WIS, CHA, DEX and AGI. A barded character won't feel the effects of their own songs but instead gain their boosts from the enjoyment of others.
 
-# Non Bard Uses
+# Being Barded
+When you are barded 
 
+## Acquiring new Stories
+
+Barded characters are able to connect to a stream of local happenings, and they use relationships with other bards in other regions to get information from other streams. A well travelled bard will always have more to tell.
+
+Other sources for bardsong include rumours, where Bards can be largely responsible for the rumor becoming truth.
+
+## Telling Epics
+
+## 
+
+# Non Bard Uses
 
 ## Build-Augment
 
@@ -14,4 +26,4 @@ When bards are playing, characters are free to browse their collection of music 
 
 ## Questing
 
-Another way to use a bard is to draw quest inspiration from the stories that you see.
+Another way to use a bard is to draw quest inspiration from the stories that you see. 

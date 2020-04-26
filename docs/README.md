@@ -12,7 +12,7 @@ Current stage of development with the game engine is **abstract design**
 ### Rendering Engine - Testing and Development
 Rendering engine is a trial by fire being tested and modified slowly and painfully.
 
-Simultaneously being developed and documentation of this can be found at
+* Simultaneously being developed and documentation of this can be found at
  [engine design](2-engine-design/README.md).
 
  
