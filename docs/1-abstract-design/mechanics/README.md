@@ -1,4 +1,5 @@
 # Game Mechanics
+*return to [Abstract Design](../README.md)*
 
 Role relies on having a variety of game mechanics designed to interplay.
 
