@@ -6,8 +6,6 @@ An [entity](entity.md) is an object that exists in space. It is really just an e
 
 Entities also must have [physical properties](../mechanics/physical-properties.md), however these are not determined by the player but rather by the components that make up the entity.
 
-**Negative space** is the amount of space an entity is allowed to use as a container. This is expressed as a percentage of the total volume and it is limited by the following factors:
-
 
 ## Components
 

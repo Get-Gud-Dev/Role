@@ -15,3 +15,6 @@ Entities are given function and form using components, which can be combined to 
 
 The basis for the game mechanics revolve around bringing adventure, exploration and social gameplay into the massively multiplayer game.
 
+
+## Technical Considerations
+*Article: [Technical Considerations](technical/README.md)

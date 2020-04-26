@@ -14,3 +14,7 @@ Going above your carry **weight** inflicts encumbrance penalties, reductions to 
 Size is a property of an entity, it is measured in meters cubed.
 
 Containers may only be able to contain a total volume or objects below or above a particular volume.
+
+## Negative space
+
+The amount of space an entity is allowed to use as a container. This is expressed as a percentage of the total volume and it is limited by the following factors:
