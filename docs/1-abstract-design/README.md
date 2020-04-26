@@ -1,8 +1,8 @@
 # Abstract Design
 
-This section of the documentation describes the game in markety terms and uses more vague terminology.
+## Game Mechanics
 
-It is to be thought of as the guiding principle for deriving the solid game mechanics.
+See [Game Mechanics](game-mechanics/README.md)
 
 ## Entity
 *Article [entity](entity.md)*
