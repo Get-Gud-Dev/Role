@@ -47,7 +47,10 @@ A township must have facility to support a much larger number of people. Townshi
 
 ## City (100-500+)
 
-A city meets the needs of a township but is not a metropolis
+A city meets the needs of a township but is not yet qualified as a Metropolis, to have a city:
+
+- Population over 100
+- All requirements from lower tiers
 
 ## Metropolis (100-500+)
 
