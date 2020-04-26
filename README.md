@@ -15,4 +15,4 @@ Early design, so early that conclusions can't really be drawn.
 
 ## Contributing
 
-Read the various documents in [abstract design](documentation/1-abstract-design) and [renderer design](documentation/2-engine-design), create issues surrounding things that may not work, beg more explanation, etc.
+Read the various documents in [abstract design](documentation/1-abstract-design) and [engine design](documentation/2-engine-design), create issues surrounding things that may not work, beg more explanation, etc.
