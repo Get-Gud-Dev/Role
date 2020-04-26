@@ -25,3 +25,11 @@ Some areas should be arranged to be obscenely easy to create content for. The ob
 - Adding secrets to things
 - Expanding NPC dialogs
 - Creating Books
+
+## Tools of Creation
+
+Each aspect of creation should have a custom built tool, and these tools should feel as though they are a part of the game.
+
+### Map Making
+
+Players create maps 
