@@ -8,9 +8,25 @@ In Role, everyone is constantly being encouraged to weave stories, the Rewards f
 - Collecting rewards (Favours, Treasures) that offer stat boosts and bonuses from other players.
 - Performing significant character upgrades, manifesting ones Destiny
 
+## Day to Day StoryWeaving
+
+The most common of stories are those which happen in the day-to-day. One of the most accessible ways of modifying your character is in day-to-day storytelling. By placing yourself in a story you stand to gain a token reward that you can use whenever you desire. Think of it as gaining a favour to be used at a later time, or a prized jewel to be sold on a rainy day.
+
+'Favours' can be called in, collected, or consigned out to others as a stand in for something they may need that you do not have.
+
+A favour usually comes at the expense of someone else, though they generally don't feel this cost or they pay it straight away thus releasing their end of the bargain.
+
+Someone who has just been robbed has a slightly lower wealth stat for a while, however they end up with loose ends that they can tie up into more favours while they wait for their shop to recover.
+
+The thief can hang onto their wares to sell at the right time to increase their wealth stat for a time.
+
+## Loose Ends
+
+A loose end is an open ended story component, whenever someone goes about storyweaving, it creates loose ends. Well designed quests should create many loose ends that allow people to connect their own story or get a quest started for themselves.
+
 ## Destiny
 
-Destiny is one of the most basic forms of Story Weaving. Manifesting ones destiny is a combination of the recognition of the stories that came before you, and the forging of your own tale as a new link in the chain.
+Destiny is one form of Story Weaving. Manifesting ones destiny is a combination of the recognition of the stories that came before you, and the forging of your own tale as a new link in the chain.
 
 ### Destiny by Archetype
 These destinies are reserved for those who say, which to become masters of the necromantic arts. The more archetypes that umbrella the mastery you seek, the more arduous the task will be.
