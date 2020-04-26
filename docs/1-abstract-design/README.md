@@ -2,7 +2,7 @@
 
 ## Game Mechanics
 
-See [Game Mechanics](game-mechanics/README.md)
+See [Game Mechanics](mechanics/README.md)
 
 ## Entity
 *Article [entity](entity.md)*
