@@ -22,7 +22,10 @@ Entity components attach to entities and give them additional behaviour. Compone
 
 #### Character
 
-Initializing an entity with a [character](components/character.md) gives it a stat engine and a locomotion system.
+Initializing an entity with a [character](components/character.md) gives it [stats](mechanics/stats.md), [imperitives](mechanics/imperitives.md), the ability to take [actions](mechanics/actions.md) and a locomotion system.
+
+Characters are participants in [Community]()
+
 
 Characters are also able to accept [Drivers](components/driver.md)
 
@@ -44,4 +47,4 @@ Horses would be a fine example of an appropriate vehicular character.
 
 #### Weapon
 
-Weapons may be usable in different ways 
+Weapons may be usable in different ways to deal [different types](mechanics/damage-types.md) of damage or rely on different [skills](mechanics/skills.md).

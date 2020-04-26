@@ -49,4 +49,3 @@ If nobody is there to hear your song, you will be granted a fair roll, your chan
 Canonical story weaves are those which are prominant and permanent in the world. These are parts of the world which are governed by a body of individuals in wiki format. Major elements of any good story including the manifest destiny should be be reviewed and scrutinized by Canonical Weavers.
 
 Canonical weavers utilize tools of creation to modify and create game assets. This is a role suited for someone who perhaps has a story to tell or wants to feel more like a game master than an adventurer.
-
