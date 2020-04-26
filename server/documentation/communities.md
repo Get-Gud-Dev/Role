@@ -2,9 +2,13 @@
 
 One way to categorize communities, but not an entirely correct way is by number of inhabitants. This is a count of player operated characters and NPC's.
 
-## Friendship
+## Friendship (1-1)
 
 There are degrees here. People you have positive social actions with gradually become your friends
+
+## Patronage (1-1)
+
+Patronage is the relationship between a Patron and a Proprieter. While the relationship between Patron and Proprieter exists, the Patron has access to the Proprieters offered services directly, and the Proprieter has Access to the Patrons payment (some kind of stat offset generally).
 
 ## Party (1-7)
 
