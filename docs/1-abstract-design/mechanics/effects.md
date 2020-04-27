@@ -13,3 +13,4 @@ Effects are hard-coded things that can happen to an entity.
 - Remove Augmentation
 - Initiate Roll
 - Offer Quest
+- Refine Item

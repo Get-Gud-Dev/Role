@@ -5,6 +5,12 @@ The core Stats of Role are unchangeable- however other systems are explicitly de
 
 ## 20 Based Statistics
 
+The maximum value a statistic can have is 20. This is correlate to the game's tendency to perform rolls between 1-20 (traditionally, a d-20 or 20 sided die).
+
+This means that someone with a 20 in any stat is considered to be a never-failing god in that department.
+
+Someone who has a stat level at 5 or below is considered to be far below average where 10 is considered average.
+
 **Strength**
     Strength is all about lifting pounds and applying forces.
 - Affects base Carry / Lift strength
