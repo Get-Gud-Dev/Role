@@ -1,4 +1,5 @@
 # Character
+*Return to [Entity Model](../README.md)*
 
 Characters are participants in [Community](../mechanics/community.md)
 
