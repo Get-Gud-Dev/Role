@@ -17,7 +17,7 @@ Entity components attach to entities and give them additional behaviour. Compone
 | --------- | --- |
 | Character | Initializing an entity with a [character](../components/character.md) gives it [stats](../mechanics/stats.md), [imperitives](../mechanics/imperitives.md), the ability to take [actions](../mechanics/actions.md) and a locomotion system. |
 |Description | The [description](../components/description.md) component configures the top level description of an entity, the first thing you see about it. |
-| Details |  [Details](../components/detail.md) allow you to add small tagged descriptions to your entity.|
+| Details |  [Details](../components/details.md) allow you to add small tagged descriptions to your entity.|
 | Text | [Text](../components/text.md) components offer a much larger canvas to write on and can be used for long inscriptions, book texts, and other long format forms of expression. |
 | Vehice | [Vehicles](components/vehicle.md) require an [Engine](components/engine.md) which requires Fuel. |
 | Engine | [Engines](components/engine.md) provide torque that give force to vehicles. |
