@@ -4,41 +4,12 @@
 Maps define the player's game space. Currently, the design limits players onto a grid. A map needs the following qualities in order to function properly:
 
 ## Map Scale
-Maps can have any scale, expressed in meters
+Maps can have any scale, all values for height maps are expressed in meters. 
 
-## Height Maps
+## Map Map Height Data
+Currently I am trying to roll my own version of this, you can read more about that in the [Height Maps](height-maps.md) article.
 
-Height mapping means defining the ground and ceiling heights at all points in a map. the current design of Role places these height points on a grid like so:
+## RayCasting
+I am going to go for the raycasting method even though I am pretty sure it is a dumb idea.
 
-```
-5,5,5,5,5,5,
-5,0,0,0,0,5,
-5,0,0,0,0,5,
-5,0,0,0,0,5,
-5,5,5,5,5,5,
-
-```
-The above heightmap would represent an enclosed box where the walls are 5 units tall.
-
-### Height Values
-
-Height values are expressed in meters! Rejoice!
-
-To draw a ceiling, provide an array and specify the height above the floor to draw the ceiling.
-
-```
-5,5    ,5    ,5    ,5    ,5
-5,[0,5],[0,5],[0,5],[0,5],5
-5,[0,5],[0,5],[0,5],[0,5],5
-5,[0,5],[0,5],[0,5],[0,5],5
-5,[0,5],[0,5],[0,5],[0,5],5
-5,[0,5],[0,5],[0,5],[0,5],5
-5,5    ,5    ,5    ,5    ,5
-```
-
-### Overlapping Height Maps
-
-
-
-
-### Map Scale and Height Maps
+You can read about that endeavour in the [RayCasting](raycast.md) article.
