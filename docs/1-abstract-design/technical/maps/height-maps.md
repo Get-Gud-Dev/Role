@@ -1,4 +1,5 @@
 ## Height Maps
+*return to [Maps](../README.md)*
 
 Height mapping means defining the ground and ceiling heights at all points in a map. the current design of Role places these height points on a grid like so:
 

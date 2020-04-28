@@ -1,4 +1,5 @@
 # Raycasting
+*return to [Maps](README.md)*
 
 The raycasting engine for Role uses one ray per pixel to determine what the player is seeing at that point.
 
@@ -15,3 +16,5 @@ The column ray looks out by probing X and Y coordinates for heightmap data. Usin
 Row rays are calculated after the column ray has captured a Column Ray. Column ray angles are determined by looking at the Y resolution of the game and by calculating a Y field of view using the aspect ratio of the screen and the player's X field of view.
 
 Row rays perform the exact same probing as column rays, only now the X,Y data is sampled from the maps and is technically a 'side view' taken from the top down column ray.
+
+Once a surface is hit the distance property of the ray is used to figure out how to shade it 
