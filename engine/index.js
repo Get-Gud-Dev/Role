@@ -46,7 +46,7 @@ Mapping.loadMap(temporaryMap)
 input.init()
 Settings.set('font size',16)
 
-Renderer.generateScreen()
+Renderer.init()
 
 
 gameLoop()

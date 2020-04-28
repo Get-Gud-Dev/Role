@@ -3,69 +3,15 @@ const state = require('../state')
 const tags = require('./tags')
 const util = require('../util')
 
-var ScreenData
+const Renderer = require('retro-render')
 
-/** Generate a pixel array to draw on
- * 
- */
-module.exports.generateScreen = () => {
-    let gameDiv = document.getElementById('game')
+var gameRenderer
 
-    gameDiv.innerHTML = ""
+module.exports.init = () => {
+    let resolution = settings.get('resolution')
 
-    let screen = {
-        columnCount: 0,
-        rowCount: 0,
-
-        columnPixels: [],
-        rowPixels: [],
-        rows: [],
-
-        matrix: [[]]
-    }
-
-
-    let columnPixels = settings.get('resolution')[0]
-    let rowPixels = settings.get('resolution')[1]
-
-
-    screen.columnCount = columnPixels
-    screen.rowCount = rowPixels
-
-    screen.columns = columnPixels
-
-    for (let i = 0; i < columnPixels * rowPixels; i++) {
-        let column = i % columnPixels
-        let row = Math.floor(i / columnPixels)
-
-        if (row == 0)
-            screen.columnPixels[column] = []
-        screen.matrix.push([])
-        if (column == 0) {
-            screen.rowPixels[row] = []
-            let newRow = tags.row()
-            screen.rows.push(newRow)
-
-            gameDiv.appendChild(newRow)
-        }
-
-        let pixelContainer =  tags.pixel()
-        let pixel = pixelContainer.childNodes[0]
-        pixel.innerHTML = '█'
-
-        screen.columnPixels[column].push(pixelContainer)
-        screen.rowPixels[row].push(pixelContainer)
-
-        screen.matrix[column][row] = pixelContainer
-
-        screen.rows[row].appendChild(pixelContainer)
-        screen.matrix[column][row] = pixelContainer
-
-        let newSubPixel = tags.subPixel()
-        pixelContainer.appendChild(newSubPixel)
-
-    }
-    ScreenData = screen
+    gameRenderer = Renderer.new('game')
+    gameRenderer.generateScreen(resolution[0], resolution[1])
 
 }
 
@@ -120,13 +66,13 @@ function calculateWallBounds(distance, wallData) {
 
     //How many pixels smaller is the screen at distance
     let deltaDPixels = ScreenData.rowCount - dPixels
-    
+
     //Split the pixels up to the top and bottom
     let dPixelSplit = deltaDPixels / 2
-    
+
     //Get an even number of pixels to divide between the top and bottom
     //Giving us the distance from the floor and ceiling to this point.
-    let dPixelEven =  2 * Math.round(dPixelSplit / 2)
+    let dPixelEven = 2 * Math.round(dPixelSplit / 2)
 
 
     //Get the offset between the player and the wall height
@@ -136,7 +82,7 @@ function calculateWallBounds(distance, wallData) {
     let h1Prime = screenHeight - eyePixels
 
     //Length of wall above and below the eye respectively.
-    let h1 = h1Prime/screenHeight * hPixels
+    let h1 = h1Prime / screenHeight * hPixels
     let h2 = hPixels - h1
 
     // This is the row number where the wall joins the roof
@@ -170,7 +116,7 @@ function renderColumn(number, distance, bounds, data) {
         //Draw the WALL
         else if (truePixel <= bounds.max && truePixel >= bounds.min) {
             //pixel.innerHTML = bounds.max - bounds.min
-            pixel.style.color = util.changeColor(data.wall, -14*distance)
+            pixel.style.color = util.changeColor(data.wall, -14 * distance)
         }
         //Else, draw the BOTTOM
         else {
