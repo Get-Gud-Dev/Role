@@ -20,10 +20,25 @@ Height mapping means defining the ground and ceiling heights at all points in a 
 ```
 The above heightmap would represent an enclosed box where the walls are 5 units tall.
 
-##### Height Values
+### Height Values
 
 Height values are expressed in meters! Rejoice!
 
-Height values are not exactly as simple as listed above.
+To draw a ceiling, provide an array and specify the height above the floor to draw the ceiling.
+
+```
+5,5    ,5    ,5    ,5    ,5
+5,[0,5],[0,5],[0,5],[0,5],5
+5,[0,5],[0,5],[0,5],[0,5],5
+5,[0,5],[0,5],[0,5],[0,5],5
+5,[0,5],[0,5],[0,5],[0,5],5
+5,[0,5],[0,5],[0,5],[0,5],5
+5,5    ,5    ,5    ,5    ,5
+```
+
+### Overlapping Height Maps
+
+
+
 
 ### Map Scale and Height Maps
