@@ -8,13 +8,8 @@
 
 The basis for the game mechanics revolve around bringing adventure, exploration and social gameplay into the massively multiplayer game.
 
-### Entity Model
-*Article: [Entity Model](entity-model/README.md)*
-
-The entity model is akin to the base-class which all objects in the world derive from. The entity model specifies the unbreakable, unchangeable rules of the Role world.
-
-Entities are given function and form using components, which can be combined to create any type of thing the game world would need.
 
 ## Technical Considerations
-*Article: [Technical Considerations](technical/README.md)
+*Article: [Technical Considerations](technical/README.md)*
 
+The technical considerations section seeks to explain in deeper terms- but not quite pseudocode or API documentation -how the propositions in the game mechanics section will be created.
