@@ -3,7 +3,7 @@
 
 Game Mechanics are all fun and games, the devil is in the details and technicalities. These pages seek to explore the limitations of what a text based 3d engine can do.
 
-### Entity Model
+## Entity Model
 *Article: [Entity Model](entity-model/README.md)*
 
 The entity model is akin to the base-class which all objects in the world derive from. The entity model specifies the unbreakable, unchangeable rules of the Role world.
