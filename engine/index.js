@@ -2,7 +2,7 @@ const gameLoop = require('./loop')
 const Mapping = require('./mapping')
 const GameState = require('./state')
 const Settings = require('./settings')
-const Renderer = require('./rendering')
+const Renderer = require('./rendering/render-classic')
 const util = require('./util')
 const input = require('./input')
 
@@ -15,21 +15,26 @@ GameState.setPixelRatio(0.5)
 GameState.setEyePoint(1.85)
 
 // Load the map
-Settings.set('resolution', [160, 25])
-Settings.set('fov', 70)
+Settings.set('resolution', [75, 22])
+Settings.set('fov', 90)
 Settings.set('view distance', 50)
-
+Settings.set('ray jump', 0.3)
+Settings.set('debug', document.getElementById('debug'))
 let temporaryMapHeader = {name:"Test map", blockSize:3, blockHeight:2.5}
 
 let temporaryMapData = [ 
-    [1,1,1,1,1,1,1,1,1,1],
-    [1,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,3,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,1],
-    [1,2,2,2,2,2,2,2,2,1]
+    [[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0]],
+    [[4,0],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[4,0]],
+    [[4,0],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[4,0]],
+    [[4,0],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[4,0]],
+    [[4,0],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[4,0]],
+    [[4,0],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[4,0]],
+    [[4,0],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[4,0]],
+    [[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0]]
+]
+
+let temporaryMapColours = [
+    
 ]
 
 let temporaryMapBlocks = [
@@ -44,7 +49,7 @@ let temporaryMap = {header: temporaryMapHeader, data: temporaryMapData, block: t
 Mapping.loadMap(temporaryMap)
 
 input.init()
-Settings.set('font size',16)
+Settings.set('font size',26)
 
 Renderer.init()
 

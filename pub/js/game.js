@@ -12,11 +12,11 @@ module.exports.applyMotion = (delta) => {
     let inputState = input.getState()
     
     //let normal = util.getNormal(state.getDirection())
-
+    state.setDirection(state.getDirection() + (0.01 * inputState.delta_mouse_x))
 
     // 2d normal of the player's direction
     let normal2d = util.getNormal(state.getDirection())
-    let rightNormal2d = util.getNormal(state.getDirection() + (Math.PI/2) )
+    let rightNormal2d = util.getNormal(state.getDirection() - (Math.PI/2) )
     //The player's position
     let position = state.getPosition()
 
@@ -48,7 +48,7 @@ module.exports.applyMotion = (delta) => {
 
 
         let squareMag = ( (velocity.x + projectedHXV + projectedVXV) ** 2 ) + ((velocity.z + projectedHZV + projectedVZV ) ** 2)
-        if(  (squareMag) <= state.getMaxSpeed() * 0.0001){
+        if(  (Math.sqrt(squareMag)) <= state.getMaxSpeed()){
             velocity.x += projectedHXV + projectedVXV
             velocity.z += projectedHZV + projectedVZV
         }
@@ -64,16 +64,22 @@ module.exports.applyMotion = (delta) => {
     let targetY = position.y
     let targetZ = position.z + velocity.z
 
-    if(!mapping.collisionCheck(targetX, targetZ))
+    if(!mapping.collisionCheck(targetX, targetZ, position)){
         state.setPosition(targetX, targetY, targetZ )
-    state.setDirection(state.getDirection() + (0.01 * inputState.delta_mouse_x))
+        if(state.getPosition().y < state.getGroundLevel()){
+            console.log('boop')
+            state.setPosition(state.getPosition().x, state.getGroundLevel() ,state.getPosition().z)
+
+        }
+    }
+
 }
-},{"../input":3,"../mapping":5,"../state":9,"../types/vector3":11,"../util":12}],2:[function(require,module,exports){
+},{"../input":3,"../mapping":5,"../state":8,"../types/vector3":11,"../util":12}],2:[function(require,module,exports){
 const gameLoop = require('./loop')
 const Mapping = require('./mapping')
 const GameState = require('./state')
 const Settings = require('./settings')
-const Renderer = require('./rendering')
+const Renderer = require('./rendering/render-classic')
 const util = require('./util')
 const input = require('./input')
 
@@ -86,28 +92,33 @@ GameState.setPixelRatio(0.5)
 GameState.setEyePoint(1.85)
 
 // Load the map
-Settings.set('resolution', [160, 25])
-Settings.set('fov', 70)
+Settings.set('resolution', [75, 22])
+Settings.set('fov', 90)
 Settings.set('view distance', 50)
-
+Settings.set('ray jump', 0.3)
+Settings.set('debug', document.getElementById('debug'))
 let temporaryMapHeader = {name:"Test map", blockSize:3, blockHeight:2.5}
 
 let temporaryMapData = [ 
-    [1,1,1,1,1,1,1,1,1,1],
-    [1,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,3,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,1],
-    [1,0,0,0,0,0,0,0,0,1],
-    [1,2,2,2,2,2,2,2,2,1]
+    [[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0]],
+    [[4,0],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[4,0]],
+    [[4,0],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[4,0]],
+    [[4,0],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[4,0]],
+    [[4,0],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[4,0]],
+    [[4,0],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[4,0]],
+    [[4,0],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[4,0]],
+    [[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0]]
+]
+
+let temporaryMapColours = [
+    
 ]
 
 let temporaryMapBlocks = [
-    {label: 'floor', height: 0, top:'#000000', bottom:'#AAAAAA' },
-    {label: 'wall', height: 2.5, wall:'#DDDDDD', top:'#222222', bottom:'#AAAAAA'},
-    {label: 'southWall', height: 2.5, wall:'#c75648', top:'#222222', bottom:'#AAAAAA'},
-    {label: 'stepLow', height: 0.5, wall:'#555555', top:'#222222', bottom:'#AAAAAA'}
+    {label: 'floor', height: 0, ceil:2.5, top:'#000000', bottom:'#AAAAAA' },
+    {label: 'wall', height: 2.5, ceil:2.5, wall:'#DDDDDD', top:'#222222', bottom:'#AAAAAA'},
+    {label: 'southWall', height: 2.5, ceil:2.5, wall:'#c75648', top:'#222222', bottom:'#AAAAAA'},
+    {label: 'stepLow', height: 0.5, ceil:2.5, wall:'#555555', top:'#222222', bottom:'#AAAAAA'}
 ]
 
 let temporaryMap = {header: temporaryMapHeader, data: temporaryMapData, block: temporaryMapBlocks}
@@ -115,13 +126,13 @@ let temporaryMap = {header: temporaryMapHeader, data: temporaryMapData, block: t
 Mapping.loadMap(temporaryMap)
 
 input.init()
-Settings.set('font size',16)
+Settings.set('font size',26)
 
-Renderer.generateScreen()
+Renderer.init()
 
 
 gameLoop()
-},{"./input":3,"./loop":4,"./mapping":5,"./rendering":6,"./settings":8,"./state":9,"./types/vector3":11,"./util":12}],3:[function(require,module,exports){
+},{"./input":3,"./loop":4,"./mapping":5,"./rendering/render-classic":6,"./settings":7,"./state":8,"./types/vector3":11,"./util":12}],3:[function(require,module,exports){
 const state = require('../state')
 const util = require('../util')
 
@@ -154,10 +165,10 @@ function keyDown(e) {
         inputState.vertical = -1
     }
     if(e.code == 'KeyA'){
-        inputState.horizontal = -1
+        inputState.horizontal = 1
     }
     if(e.code == 'KeyD'){
-        inputState.horizontal = 1
+        inputState.horizontal = -1
     }
 }
 
@@ -201,20 +212,25 @@ document.addEventListener('keyup', keyUp)
     }
 }
 
-},{"../state":9,"../util":12}],4:[function(require,module,exports){
+},{"../state":8,"../util":12}],4:[function(require,module,exports){
 var request
 const state = require('./state')
 const mapping =  require('./mapping')
-const rendering = require('./rendering')
+const rendering = require('./rendering/render-classic')
 const settings = require ('./settings')
 const inputs = require('./input')
 const control = require('./control')
+const util = require('./util')
+
+const ClassicCast = require('./types/classicCast')
+
 
 var framer = 0
 
 var lastFrame
 
 module.exports = () => {
+
 
     const performAnimation = (timestamp) => {
         let delta = timestamp - lastFrame
@@ -230,7 +246,7 @@ module.exports = () => {
             let orientation = state.getDirection()
             //Get the number of rays to cast from the settings
             //Get the field of view to determine what our range of angles are
-            let columns = settings.get('resolution')[0]
+            let reso = settings.get('resolution')
             let fov = settings.get('fov')
             let viewDist = settings.get('view distance')
     
@@ -240,20 +256,21 @@ module.exports = () => {
             //Lower and upper angles that we scan between
             let lowerAngle = orientation - halfFov
             let upperAngle = orientation + halfFov
-    
+
+  
             //Retrieve the angle that is going to be scanned
             function getAngle(i){
-                return (((upperAngle - lowerAngle) / columns) * i ) + lowerAngle
+                return (((upperAngle - lowerAngle) / reso[0]) * i ) + lowerAngle
             }
     
             let hits = []
     
-            for(var i = 0; i < columns; i++){
-                hits.push(mapping.cast(position, getAngle(i), viewDist))
+            for(var i = 0; i < reso[0]; i++){
+                colData = ClassicCast(position, getAngle(i), viewDist)
+                
+                rendering.RenderColumn(i, colData)
             }
             
-            // update the screen
-            rendering.drawWorld(hits)
             framer++
             if(framer > 1000)
                 framer = 0
@@ -263,51 +280,30 @@ module.exports = () => {
     
     requestAnimationFrame(performAnimation)
 }
-},{"./control":1,"./input":3,"./mapping":5,"./rendering":6,"./settings":8,"./state":9}],5:[function(require,module,exports){
-const Raycast = require('../types/raycast')
+},{"./control":1,"./input":3,"./mapping":5,"./rendering/render-classic":6,"./settings":7,"./state":8,"./types/classicCast":9,"./util":12}],5:[function(require,module,exports){
+const Raycast = require('../types/columnCast')
 const util = require('../util')
 const State = require('../state')
+const settings = require('../settings')
 
 var mapLoaded = false
 
-var mapData
 var mapHeader
 var blockData
+var heightMap
+var mapCharacters
+var mapEntities
 
 /**Loads a map into memory for the game engine to calculate against
  * 
  */
 module.exports.loadMap = (data) => {
     mapHeader = data.header
-    mapData = data.data
+    heightMap = data.data
     blockData = data.block
     mapLoaded = true
 }
 
-module.exports.cast = ( position, direction, length ) => {
-    let isHit = false
-    let distance = 1
-
-    let v = util.getNormal(direction)
-
-    let characters = []
-    let hits = []
-
-    while(distance <= length)
-    {
-        let rayX = position.x + (distance * v.x)
-        let rayY = position.z + (distance * v.y)
-
-        //let charHit = checkForCharacterHit(rayX, rayY)
-        let blockHit = this.checkForHit(rayX, rayY)
-        distance += 0.3
-        if(hits != null){
-            hits.push({hit:blockData[blockHit], distance:distance})
-            
-        }
-    }
-    return hits
-}
 
 module.exports.checkForCharacterHit = (x, y) => {
     for(var characterIndex in chars)
@@ -320,15 +316,13 @@ module.exports.checkForCharacterHit = (x, y) => {
     }
 }
 
+
 module.exports.checkForHit = (x, y) =>{
-    let hits = []
     //first see if we hit any objects
-
-
     let roundedCoordinates = [Math.floor(x), Math.floor(y)]
 
-    if(mapData[roundedCoordinates[0]] != null){
-        let blockValue = mapData[roundedCoordinates[0]][roundedCoordinates[1]]
+    if(heightMap[roundedCoordinates[0]] != null){
+        let blockValue = heightMap[roundedCoordinates[0]][roundedCoordinates[1]]
         
         return blockValue
 
@@ -343,11 +337,13 @@ module.exports.collisionCheck = (x, y) => {
 
     let roundedCoordinates = [Math.floor(x), Math.floor(y)]
 
+
+
     if(oldBlock[0] == roundedCoordinates[0] && oldBlock[1] == roundedCoordinates[1])
         return false
     else{
-        let blockValue = mapData[roundedCoordinates[0]][roundedCoordinates[1]]
-        if(blockData[blockValue].height <= (position.y + State.getStepHeight())){
+        let blockValue = heightMap[roundedCoordinates[0]][roundedCoordinates[1]]
+        if(blockValue[0] <= (position.y + State.getStepHeight())){
             return false
         }
         else
@@ -357,243 +353,123 @@ module.exports.collisionCheck = (x, y) => {
     
 }
 
+module.exports.getGroundLevel = (position) => {
+    if(heightMap == null)
+        return
+    let roundedCoordinates = [Math.floor(position.x), Math.floor(position.z)]
+    let groundlevel = heightMap[roundedCoordinates[0]][roundedCoordinates[1]][0]
+    settings.get('debug').innerHTML = (groundlevel)
+    return groundlevel
+}
+
 function pointInCircle(cX, cY, radius, x, y) {
     let squareDistance = (cX - x) ** 2 + (cY - y) ** 2
     return squareDistance <= radius ** 2
 }
-},{"../state":9,"../types/raycast":10,"../util":12}],6:[function(require,module,exports){
-const settings = require('../settings')
+},{"../settings":7,"../state":8,"../types/columnCast":10,"../util":12}],6:[function(require,module,exports){
 const state = require('../state')
-const tags = require('./tags')
 const util = require('../util')
+const settings = require('../settings')
+const Renderer = require('retro-render')
 
-var ScreenData
+var gameRenderer
 
-/** Generate a pixel array to draw on
- * 
- */
-module.exports.generateScreen = () => {
-    let gameDiv = document.getElementById('game')
+module.exports.init = () => {
+    let resolution = settings.get('resolution')
 
-    gameDiv.innerHTML = ""
-
-    let screen = {
-        columnCount: 0,
-        rowCount: 0,
-
-        columnPixels: [],
-        rowPixels: [],
-        rows: [],
-
-        matrix: [[]]
-    }
-
-
-    let columnPixels = settings.get('resolution')[0]
-    let rowPixels = settings.get('resolution')[1]
-
-
-    screen.columnCount = columnPixels
-    screen.rowCount = rowPixels
-
-    screen.columns = columnPixels
-
-    for (let i = 0; i < columnPixels * rowPixels; i++) {
-        let column = i % columnPixels
-        let row = Math.floor(i / columnPixels)
-
-        if (row == 0)
-            screen.columnPixels[column] = []
-        screen.matrix.push([])
-        if (column == 0) {
-            screen.rowPixels[row] = []
-            let newRow = tags.row()
-            screen.rows.push(newRow)
-
-            gameDiv.appendChild(newRow)
-        }
-
-        let pixelContainer =  tags.pixel()
-        let pixel = pixelContainer.childNodes[0]
-        pixel.innerHTML = '█'
-
-        screen.columnPixels[column].push(pixelContainer)
-        screen.rowPixels[row].push(pixelContainer)
-
-        screen.matrix[column][row] = pixelContainer
-
-        screen.rows[row].appendChild(pixelContainer)
-        screen.matrix[column][row] = pixelContainer
-
-        let newSubPixel = tags.subPixel()
-        pixelContainer.appendChild(newSubPixel)
-
-    }
-    ScreenData = screen
+    gameRenderer = Renderer.new('game')
+    gameRenderer.generateScreen(resolution[0], resolution[1])
 
 }
 
-/** 
- * 
- */
-module.exports.drawWorld = (hits) => {
-    let entities = []
+module.exports.RenderColumn = (column, columnData) => {
+    let distance = settings.get('ray jump')
+
+    let resolution = settings.get('resolution')
+
+    let blockScale = state.getBlockScale()
+
+    let eyeLine = Math.floor(resolution[1] / 2) - 1
+
+    // The upper and lower screen bounds are the
+    // highest and lowest rows that can still be
+    // drawn on.
+    let topPixelsDrawn = 0
+    let bottomPixelsDrawn = 0
+
+    let renderData = []
+
+    renderData.length = resolution[1]
+    //Walls are detected closeset to furthest in chunks
+    let sectionData = []
+    for (var wallID in columnData) {
+
+        //Wall height data
+        let wall = columnData[0][wallID]
+
+        //The depth of the segment being viewed.
+        let sectionDepth = columnData[1][wallID]
+
+        // The height of the floor line for this chunk
+        let floorLine = wall[0]
+
+        // The height of the ceiling line for this chunk
+        let ceilingLine = wall[0] + wall[1]
+
+        // distance from the eye to the floor line
+        let floorOffset = state.getEyeCoordinate() - floorLine
+        let floorOffsetPixels = Math.round((util.calculateApparentSize(floorOffset, distance)/blockScale))
+
+        let ceilingOffset = state.getEyeCoordinate() - ceilingLine
+        let ceilingOffsetPixels = Math.round((util.calculateApparentSize(ceilingOffset, distance)/ blockScale))
+
+        // Everything on and below this pixel is wall
+        let floorOffsetScreenPosition =  Math.min( Math.max( eyeLine + floorOffsetPixels , 0 ), resolution[1] - 1 ) 
+ 
+        let ceilingOffsetScreenPosition = Math.min( Math.max( eyeLine + ceilingOffsetPixels , 0 ), resolution[1] - 1 ) 
+
+        let farFloorOffsetPixels = Math.round((util.calculateApparentSize(floorOffset, distance + sectionDepth)/ blockScale))
+        let farCeilingOffestPixels = Math.round((util.calculateApparentSize(ceilingOffset , distance + sectionDepth)/ blockScale))
 
 
-    //First look at all hits
-    for (var hitIndex in hits) {
-        let hit = hits[hitIndex]
-        //Each ray can hit multiple objects so cycle through them
-        for (var rayHitID in hit) {
-            let rayHit = hit[rayHitID]
-            for (var hitThingID in rayHit.hit) {
-                let hitThing = rayHit.hit[hitThingID]
-                //    entities.push(rayHit)
-                if (hitThing != null) {
-                    let bounds = calculateWallBounds(rayHit.distance, rayHit.hit)
-                    renderColumn(hitIndex, rayHit.distance, bounds, rayHit.data)
-                }
+        //Everything on and below this pixel floor until you hit the wall
+        let farFloorOffsetScreenPosition = Math.min( Math.max( eyeLine + farFloorOffsetPixels , 0 ), resolution[1] - 1 ) 
+        let farCeilingOffsetScreenPosition = Math.min( Math.max( eyeLine + farCeilingOffestPixels , 0 ), resolution[1] - 1 ) 
+
+
+        let topPixelsTemp = 0
+        let bottomPixelsTemp = 0
+
+        for (let i = farFloorOffsetScreenPosition; i < resolution[1] - 1 - bottomPixelsDrawn; i++) {
+            let color = "#FFFFFF"
+            if (i >= floorOffsetScreenPosition) {
+                color = '#444444'
+            }
+            if (i < resolution[1] - 1 && i >= 0) {
+                gameRenderer.screen.columnPixels[column][i].firstChild.style.color = util.changeColor(color, 0) //(pixelDistance))
+                bottomPixelsTemp++
             }
         }
 
+        for (let i = topPixelsDrawn; i < farCeilingOffsetScreenPosition; i++) {
+            let color = "#444444"
+            let pixelDistance = distance
+            if (i >= ceilingOffsetScreenPosition) {
+                color = '#FFFFFF'
+            }
+            if (i < resolution[1] - 1 && i >= 0) {
+                gameRenderer.screen.columnPixels[column][i].firstChild.style.color = util.changeColor(color, 0)//(pixelDistance))
+                topPixelsTemp++
+            }
+        }
 
+        topPixelsDrawn += topPixelsTemp
+        bottomPixelsDrawn += bottomPixelsTemp
+        distance += sectionDepth
     }
-}
-
-
-//Given a block and its distance, calculate the bounds of the wall
-function calculateWallBounds(distance, wallData) {
-    //Observer height of the camera
-    let eyeHeight = state.getEyePoint()
-    let eyePixels = ScreenData.rowCount / 2
-
-    //Fonts may have different character ratios
-    let pixelRatio = state.getPixelRatio()
-
-    //How much apparent height in unit does each pixel represent
-    let heightPerPixel = (eyeHeight / eyePixels) * pixelRatio
-
-    //Calculate the ceiling point and floor points in pixels
-    let screenHeight = heightPerPixel * ScreenData.rowCount
-
-    //How tall is the screen at the distance
-    let dScreenHeight = util.calculateApparentSize(screenHeight, distance)
-
-    //How many pixels high is the screen at this distance
-    let dPixels = dScreenHeight / heightPerPixel
-
-    //How many pixels smaller is the screen at distance
-    let deltaDPixels = ScreenData.rowCount - dPixels
-    
-    //Split the pixels up to the top and bottom
-    let dPixelSplit = deltaDPixels / 2
-    
-    //Get an even number of pixels to divide between the top and bottom
-    //Giving us the distance from the floor and ceiling to this point.
-    let dPixelEven =  2 * Math.round(dPixelSplit / 2)
-
-
-    //Get the offset between the player and the wall height
-    let wallOffset = state.getPosition()
-
-    //Length of the wall above and below the wall if it was 1m away
-    let h1Prime = hPrimePixels - eyePixels
-
-    //Length of wall above and below the eye respectively.
-    let h1 = h1Prime/hPrimePixels * hPixels
-    let h2 = hPixels - h1
-
-    // This is the row number where the wall joins the roof
-    let vMax = Math.round(eyePixels + h1)
-    // This is the row number where the wall joins the floor
-    let vMin = Math.round(eyePixels - h2)
-
-    return { max: vMax, min: vMin }
-}
-
-function renderWall() {
 
 }
-
-function renderColumn(number, distance, bounds, data) {
-
-    // Lower pixelID makes for a higher up pixel
-    for (var pixelID in ScreenData.columnPixels[number]) {
-        // Pixel number raises as you go up, so flip the
-        // iterator
-        let truePixel = ScreenData.rowCount - 1 - pixelID
-        // Get the pixel span to be written
-        let pixel = ScreenData.columnPixels[number][pixelID].firstChild
-
-        // If the pixel is above roof level
-        // Draw the TOP
-        if (truePixel > bounds.max) {
-            pixel.style.color = data.top
-        }
-        //If the pixel is between the roof and floor
-        //Draw the WALL
-        else if (truePixel <= bounds.max && truePixel >= bounds.min) {
-            //pixel.innerHTML = bounds.max - bounds.min
-            pixel.style.color = util.changeColor(data.wall, -14*distance)
-        }
-        //Else, draw the BOTTOM
-        else {
-            //pixel.innerHTML = bounds.min
-            pixel.style.color = data.bottom
-        }
-        pixel.innerHTML = truePixel
-    }
-}
-},{"../settings":8,"../state":9,"../util":12,"./tags":7}],7:[function(require,module,exports){
-module.exports.row = () => {
-    let newRow = document.createElement('span')
-    newRow.classList.add('row')
-
-    return newRow
-}
-
-module.exports.pixel = () => {
-    let newPixelContainer = document.createElement('span')
-    newPixelContainer.classList.add('pixel-container')
-
-    let newPixel = document.createElement('span')
-    newPixel.classList.add('pixel')
-
-    newPixelContainer.appendChild(newPixel)
-
-    return newPixelContainer
-}
-
-module.exports.subPixel = () => {
-    let newSubPixelContainer = document.createElement('span')
-    newSubPixelContainer.classList.add('subpixel-container')
-
-    
-
-    let subPixel0 = document.createElement('span')
-    let subPixel1 = document.createElement('span')
-    let subPixel2 = document.createElement('span')
-    let subPixel3 = document.createElement('span')
-
-    subPixel0.classList.add('subpixel')
-    subPixel1.classList.add('subpixel')
-    subPixel2.classList.add('subpixel')
-    subPixel3.classList.add('subpixel')
-
-    subPixel0.classList.add('subpixel0')
-    subPixel1.classList.add('subpixel1')
-    subPixel2.classList.add('subpixel2')
-    subPixel3.classList.add('subpixel3')
-
-
-    newSubPixelContainer.appendChild(subPixel0)
-    newSubPixelContainer.appendChild(subPixel1)
-    newSubPixelContainer.appendChild(subPixel2)
-    newSubPixelContainer.appendChild(subPixel3)
-
-    return newSubPixelContainer
-}
-},{}],8:[function(require,module,exports){
+},{"../settings":7,"../state":8,"../util":12,"retro-render":13}],7:[function(require,module,exports){
 const Utility = require('../util')
 const state = require('../state')
 var settings = {}
@@ -603,35 +479,54 @@ module.exports.load = () => {
 }
 
 module.exports.set = (key, value) =>{
-    if(key == 'font size'){
-        game.style.fontSize = value
-        game.style.width = 
-        document.documentElement.style.setProperty('--pixel-height', value +'px')
-        document.documentElement.style.setProperty('--pixel-width', value * state.getPixelRatio() + 'px')
-        document.documentElement.style.setProperty('--window-width',settings['resolution'][0] * value * state.getPixelRatio() + 'px')
+    switch(key){
+        case 'view distance':
+            settings[key] = value
+        case 'resolution':
+            settings[key] = value
+            state.setBlockScales()
+        break;
+        case 'font size':
+            game.style.fontSize = value
+            game.style.width = 
+            document.documentElement.style.setProperty('--pixel-height', value +'px')
+            document.documentElement.style.setProperty('--pixel-width', value * state.getPixelRatio() + 'px')
+            document.documentElement.style.setProperty('--window-width',settings['resolution'][0] * value * state.getPixelRatio() + 'px')
+        break;
+        case "fov":
+            settings[key] = Utility.degreesToRadians(value)
+            state.setBlockScales()
+        break;
+        default:
+            settings[key] = value
+        break;
     }
-    if(key == "fov")
-        settings[key] = Utility.degreesToRadians(value)
-    else
-        settings[key] = value
 }
 
 module.exports.get = (key) => {
     return settings[key]
 }
-},{"../state":9,"../util":12}],9:[function(require,module,exports){
+},{"../state":8,"../util":12}],8:[function(require,module,exports){
 const Vector3 = require('../types/vector3')
+const settings = require('../settings')
+const mapping = require('../mapping')
 
 var playerState = {
     position:new Vector3(0,0,0),
     orientation:null,
-    eyepoint:null,
+    eyepoint:0,
     pixelRatio:null,
     grounded: true,
 
-    runSpeed:0.04,
+    runSpeed:0.5,
     maxSpeed:1,
-    stepHeight:0.5
+    stepHeight:0.6,
+
+    rayDistances:[],
+
+    eyeCoordinate:0,
+
+    blockScale:[0,0]
 }
 
 var characters = []
@@ -646,6 +541,10 @@ module.exports.getEyePoint = () => {
     return playerState.eyepoint
 }
 
+module.exports.getEyeCoordinate = () => {
+    return playerState.eyeCoordinate
+}
+
 module.exports.setGrounded = (value) => {
     playerState.grounded = value
 }
@@ -656,9 +555,10 @@ module.exports.isGrounded = () => {
 
 module.exports.setEyePoint = (value) => {
     playerState.eyepoint = value
+    setEyeCoordinate()
 }
 
-module.exports.getPosition = (data) => {
+module.exports.getPosition = () => {
     return playerState.position
 }
 
@@ -666,6 +566,42 @@ module.exports.setPosition = (x, y, z) => {
     playerState.position.x = x
     playerState.position.y = y
     playerState.position.z = z
+    setEyeCoordinate()
+    updateGroundPoint()
+}
+
+function updateGroundPoint(){
+    playerState.groundLevel = mapping.getGroundLevel(playerState.position)
+    
+}
+
+module.exports.getGroundLevel = () => {
+    return playerState.groundLevel
+}
+
+function setEyeCoordinate(){
+    if(playerState.position != null && playerState.eyepoint != null){
+
+        playerState.eyeCoordinate = playerState.eyepoint + playerState.position.y
+    }
+
+}
+
+module.exports.setBlockScales = () => {
+    let res = settings.get('resolution')
+    if(res == null)
+        return
+
+    
+    let calibrationDistance = playerState.eyepoint
+
+    let yScale = calibrationDistance / (res[1]/2)
+    
+    playerState.blockScale = yScale
+}
+
+module.exports.getBlockScale = () => {
+    return playerState.blockScale
 }
 
 module.exports.addCharacter = ( character ) => {
@@ -686,6 +622,7 @@ module.exports.getDirection = () => {
 
 module.exports.setPixelRatio = (data) => {
     playerState.pixelRatio = data
+    module.exports.setBlockScales()
 }
 
 module.exports.getPixelRatio = () => {
@@ -707,8 +644,62 @@ module.exports.getStepHeight = () => {
 module.exports.setStepHeight = (data) => {
     playerState.stepHeight = data
 }
-},{"../types/vector3":11}],10:[function(require,module,exports){
+
+
+},{"../mapping":5,"../settings":7,"../types/vector3":11}],9:[function(require,module,exports){
 const Mapping = require('../mapping')
+const Settings = require('../settings')
+
+
+module.exports = (position, direction, length) => {
+    let culled = false
+    let distance = 0.001
+
+    let v = util.getNormal(direction)
+
+    let hitList = []
+    let hitDistances = []
+
+    while(distance <= length || !culled)
+    {
+        let rayX = position.x + (distance * v.x)
+        let rayY = position.z + (distance * v.y)
+        
+        let blockHit = Mapping.checkForHit(rayX, rayY)
+        
+
+        if(blockHit == null)
+            culled = true
+        else
+        {
+
+            let lastHit = hitList[hitList.length - 1]
+
+            if(lastHit != null){
+                if(blockHit[0] == lastHit[0] && blockHit[1] == lastHit[1]) {
+                    hitDistances[hitList.length - 1] += Settings.get('ray jump')
+                }
+                else{
+                    hitDistances.push(0)
+                    hitList.push(blockHit)
+                }
+            }
+            else
+            {
+                hitList.push(blockHit)
+                hitDistances.push(0)
+            }
+        }
+        distance += Settings.get('ray jump')
+    }
+
+    return [hitList, hitDistances]
+}
+},{"../mapping":5,"../settings":7}],10:[function(require,module,exports){
+const Mapping = require('../mapping')
+const Settings = require('../settings')
+const state = require('../state')
+ util = require('../util')
 
 module.exports = (position, direction, length) => {
     let culled = false
@@ -719,31 +710,47 @@ module.exports = (position, direction, length) => {
     /** What is the cast stack? 
      * 
      * A cast stack is a list of objects that a ray hits, sorted
-     * furthest to closestw
+     * front to back.
      * 
+     * The ray casts out until it hits a space the player can't see into
+     * or until it reaches the end of its allowable distance. It then reports
+     * returns an array of elements it passed through.
      */
-    let castStack = []
+    let blockStack = []
+    let characterStack = []
+
+    let lastBlockHit
+    let lastCharHit
 
     while(distance <= length || !culled)
     {
         let rayX = position.x + (distance * v.x)
         let rayY = position.z + (distance * v.y)
 
-        let charHit = checkForCharacterHit(rayX, rayY)
-        let blockHit = checkForHit(rayX, rayY)
-        distance += 0.3
-        if(hits != null){
-            hits.push({hit:hit, distance:distance})
-            for(var hitID in hit){
-                let hitData = hit[hitID]
-                
+        let charHit = null // Mapping.checkForCharacterHit(rayX, rayY)
+        let blockHit = Mapping.heightMapPoint(rayX, rayY)
+        distance += Settings.get('ray jump')
 
-            }
+        if(charHit != null)
+        {
+            if(charHit.id != lastCharHit.id)
+                characterStack.unshift({hit:charHit, distance:distance})
         }
+
+        if(blockHit == null)
+        {
+            culled = true
+        }
+        else
+        {
+            blockStack.push(blockHit)
+        }
+        lastCharHit = charHit
+        lastBlockHit = blockHit
     }
-    return hits
+    return blockStack
 }
-},{"../mapping":5}],11:[function(require,module,exports){
+},{"../mapping":5,"../settings":7,"../state":8,"../util":12}],11:[function(require,module,exports){
 module.exports = function(x, y, z) {
     this.x = x
     this.y = y
@@ -822,5 +829,134 @@ module.exports.changeColor = (col, amt) => {
  
     return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
   
+}
+},{}],13:[function(require,module,exports){
+const tags = require('./tags')
+
+module.exports.new = function(tagName) {
+    this.viewport = document.getElementById(tagName)
+
+    this.screen = {
+        columnCount: 0,
+        rowCount: 0,
+
+        columnPixels: [],
+        rowPixels: [],
+        rows: [],
+
+        matrix: [[]]
+    }
+
+    /** Generate a pixel array to draw on
+     * 
+     */
+    this.generateScreen = (resolutionX, resolutionY, options) => {
+
+        this.viewport.innerHTML = ""
+
+        this.screen.columnCount = resolutionX
+        this.screen.rowCount = resolutionY
+
+        let totalScreenPixels = resolutionY * resolutionX
+
+        for (let i = 0; i < totalScreenPixels; i++) {
+
+            let column = i % resolutionX
+            let row = Math.floor(i / resolutionX)
+            
+            //While establishing the first row of pixels
+            //create a new array for each column both in
+            //the columns and the matrix
+            if (row == 0){
+                this.screen.columnPixels[column] = []
+                this.screen.matrix.push([])
+            }
+
+            //While establishing the first column on every row
+            if (column == 0) {
+                //Create a new list for that row's pixels
+                this.screen.rowPixels[row] = []
+
+                //Generate the row tag and add it to the rows
+                //set
+                let newRow = tags.row()
+                this.screen.rows.push(newRow)
+
+                //Add the new row to viewport
+                this.viewport.appendChild(newRow)
+            }
+
+            //Create a new Pixel, initialize it with a block
+            let pixelContainer =  tags.pixel()
+            let pixel = pixelContainer.childNodes[0]
+            
+            pixel.innerHTML = '█'
+
+            //Screen Housekeeping
+            this.screen.columnPixels[column].push(pixelContainer)
+            this.screen.rowPixels[row].push(pixelContainer)
+            this.screen.matrix[column][row] = pixelContainer
+
+            //Add the pixel to the screen
+            this.screen.rows[row].appendChild(pixelContainer)
+
+            if(options == null || options.useSubPixels == true){
+                let newSubPixel = tags.subPixel()
+                pixelContainer.appendChild(newSubPixel)
+            }
+
+        }
+
+    }
+
+
+
+    return this
+}
+},{"./tags":14}],14:[function(require,module,exports){
+module.exports.row = () => {
+    let newRow = document.createElement('span')
+    newRow.classList.add('row')
+
+    return newRow
+}
+
+module.exports.pixel = () => {
+    let newPixelContainer = document.createElement('span')
+    newPixelContainer.classList.add('pixel-container')
+
+    let newPixel = document.createElement('span')
+    newPixel.classList.add('pixel')
+
+    newPixelContainer.appendChild(newPixel)
+
+    return newPixelContainer
+}
+
+module.exports.subPixel = () => {
+    let newSubPixelContainer = document.createElement('span')
+    newSubPixelContainer.classList.add('subpixel-container')
+
+    let subPixel0 = document.createElement('span')
+    let subPixel1 = document.createElement('span')
+    let subPixel2 = document.createElement('span')
+    let subPixel3 = document.createElement('span')
+
+    subPixel0.classList.add('subpixel')
+    subPixel1.classList.add('subpixel')
+    subPixel2.classList.add('subpixel')
+    subPixel3.classList.add('subpixel')
+
+    subPixel0.classList.add('subpixel0')
+    subPixel1.classList.add('subpixel1')
+    subPixel2.classList.add('subpixel2')
+    subPixel3.classList.add('subpixel3')
+
+    newSubPixelContainer.appendChild(subPixel0)
+    newSubPixelContainer.appendChild(subPixel1)
+    newSubPixelContainer.appendChild(subPixel2)
+    newSubPixelContainer.appendChild(subPixel3)
+
+    return newSubPixelContainer
 }
 },{}]},{},[2]);

@@ -1,18 +1,23 @@
 const Vector3 = require('../types/vector3')
 const settings = require('../settings')
+const mapping = require('../mapping')
 
 var playerState = {
     position:new Vector3(0,0,0),
     orientation:null,
-    eyepoint:null,
+    eyepoint:0,
     pixelRatio:null,
     grounded: true,
 
-    runSpeed:0.04,
+    runSpeed:0.5,
     maxSpeed:1,
-    stepHeight:0.5,
+    stepHeight:0.6,
 
     rayDistances:[],
+
+    eyeCoordinate:0,
+
+    blockScale:[0,0]
 }
 
 var characters = []
@@ -27,6 +32,10 @@ module.exports.getEyePoint = () => {
     return playerState.eyepoint
 }
 
+module.exports.getEyeCoordinate = () => {
+    return playerState.eyeCoordinate
+}
+
 module.exports.setGrounded = (value) => {
     playerState.grounded = value
 }
@@ -37,10 +46,10 @@ module.exports.isGrounded = () => {
 
 module.exports.setEyePoint = (value) => {
     playerState.eyepoint = value
-    calculateRaycast()
+    setEyeCoordinate()
 }
 
-module.exports.getPosition = (data) => {
+module.exports.getPosition = () => {
     return playerState.position
 }
 
@@ -48,6 +57,42 @@ module.exports.setPosition = (x, y, z) => {
     playerState.position.x = x
     playerState.position.y = y
     playerState.position.z = z
+    setEyeCoordinate()
+    updateGroundPoint()
+}
+
+function updateGroundPoint(){
+    playerState.groundLevel = mapping.getGroundLevel(playerState.position)
+    
+}
+
+module.exports.getGroundLevel = () => {
+    return playerState.groundLevel
+}
+
+function setEyeCoordinate(){
+    if(playerState.position != null && playerState.eyepoint != null){
+
+        playerState.eyeCoordinate = playerState.eyepoint + playerState.position.y
+    }
+
+}
+
+module.exports.setBlockScales = () => {
+    let res = settings.get('resolution')
+    if(res == null)
+        return
+
+    
+    let calibrationDistance = playerState.eyepoint
+
+    let yScale = calibrationDistance / (res[1]/2)
+    
+    playerState.blockScale = yScale
+}
+
+module.exports.getBlockScale = () => {
+    return playerState.blockScale
 }
 
 module.exports.addCharacter = ( character ) => {
@@ -68,6 +113,7 @@ module.exports.getDirection = () => {
 
 module.exports.setPixelRatio = (data) => {
     playerState.pixelRatio = data
+    module.exports.setBlockScales()
 }
 
 module.exports.getPixelRatio = () => {
@@ -90,24 +136,3 @@ module.exports.setStepHeight = (data) => {
     playerState.stepHeight = data
 }
 
-module.exports.setViewDistance = () => {
-    calculateRaycast()
-}
-
-module.exports.setResolution = () => {
-    calculateRaycast()
-}
-
-function calculateRaycast(){
-    let distances = []
-
-    let resolution = settings.get('resolution')
-
-    let pixelsToEye = Math.ceil(resolution[1] / 2)
- 
-    for (let i = 0; i < pixelsToEye; i++) {
-        distances.push(i * (this.getEyePoint()/pixelsToEye))
-    }
-
-    playerState.rayDistances = distances
-}

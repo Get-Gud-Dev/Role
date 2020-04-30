@@ -30,10 +30,10 @@ function keyDown(e) {
         inputState.vertical = -1
     }
     if(e.code == 'KeyA'){
-        inputState.horizontal = -1
+        inputState.horizontal = 1
     }
     if(e.code == 'KeyD'){
-        inputState.horizontal = 1
+        inputState.horizontal = -1
     }
 }
 

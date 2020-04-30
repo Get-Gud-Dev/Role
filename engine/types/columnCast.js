@@ -1,5 +1,5 @@
 const Mapping = require('../mapping')
-
+const Settings = require('../settings')
 const state = require('../state')
  util = require('../util')
 
@@ -26,14 +26,12 @@ module.exports = (position, direction, length) => {
 
     while(distance <= length || !culled)
     {
-        let pointHit = {beginDistance:distance, endDistance:distance}
-
         let rayX = position.x + (distance * v.x)
         let rayY = position.z + (distance * v.y)
 
-        let charHit = Mapping.checkForCharacterHit(rayX, rayY)
-        let blockHit = Mapping.checkForHit(rayX, rayY)
-        distance += 0.3
+        let charHit = null // Mapping.checkForCharacterHit(rayX, rayY)
+        let blockHit = Mapping.heightMapPoint(rayX, rayY)
+        distance += Settings.get('ray jump')
 
         if(charHit != null)
         {
@@ -43,37 +41,14 @@ module.exports = (position, direction, length) => {
 
         if(blockHit == null)
         {
-
             culled = true
         }
         else
         {
-            //Check if we need to cull
-            if(blockHit.ceil != null)
-                //This would be the case where the wall
-                //meets the ceiling.
-                if(blockHit.height == blockHit.ceil)
-                    culled = true
-            //Here there's no ceiling, the only thing we
-            //need to know is if the object is so tall as to
-            //obstruct view 
-            else
-            {
-                let thresholdHeight = util.calculateApparentSize(state.getEyePoint() * 2)
-                if(blockHit.height > thresholdHeight)
-                    culled = true
-                
-            }
-
-            if(lastBlockHit != null)
-                if(blockHit.height == lastBlockHit.height &&
-                    blockHit.ceil == lastBlockHit.ceil)
-                    
-                else
-                    pointHit.block = blockHit
+            blockStack.push(blockHit)
         }
         lastCharHit = charHit
         lastBlockHit = blockHit
     }
-    return castStack
+    return blockStack
 }

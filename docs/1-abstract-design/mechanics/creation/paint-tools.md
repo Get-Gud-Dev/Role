@@ -13,3 +13,4 @@ Painting environments means painting textures at 'half-resolution'. [Textures](.
 ## Detail Painting
 
 Details are painted at twice the resolution of Environments, they are intended to pop out at the user, to help signal interactive content or important parts of the level design.
+

@@ -11,11 +11,11 @@ module.exports.applyMotion = (delta) => {
     let inputState = input.getState()
     
     //let normal = util.getNormal(state.getDirection())
-
+    state.setDirection(state.getDirection() + (0.01 * inputState.delta_mouse_x))
 
     // 2d normal of the player's direction
     let normal2d = util.getNormal(state.getDirection())
-    let rightNormal2d = util.getNormal(state.getDirection() + (Math.PI/2) )
+    let rightNormal2d = util.getNormal(state.getDirection() - (Math.PI/2) )
     //The player's position
     let position = state.getPosition()
 
@@ -47,7 +47,7 @@ module.exports.applyMotion = (delta) => {
 
 
         let squareMag = ( (velocity.x + projectedHXV + projectedVXV) ** 2 ) + ((velocity.z + projectedHZV + projectedVZV ) ** 2)
-        if(  (squareMag) <= state.getMaxSpeed() * 0.0001){
+        if(  (Math.sqrt(squareMag)) <= state.getMaxSpeed()){
             velocity.x += projectedHXV + projectedVXV
             velocity.z += projectedHZV + projectedVZV
         }
@@ -63,7 +63,13 @@ module.exports.applyMotion = (delta) => {
     let targetY = position.y
     let targetZ = position.z + velocity.z
 
-    if(!mapping.collisionCheck(targetX, targetZ))
+    if(!mapping.collisionCheck(targetX, targetZ, position)){
         state.setPosition(targetX, targetY, targetZ )
-    state.setDirection(state.getDirection() + (0.01 * inputState.delta_mouse_x))
+        if(state.getPosition().y < state.getGroundLevel()){
+            console.log('boop')
+            state.setPosition(state.getPosition().x, state.getGroundLevel() ,state.getPosition().z)
+
+        }
+    }
+
 }

@@ -19,6 +19,12 @@ body {
     height: var(--pixel-height);
 }
 
+.debug  {
+    width: 90vw;
+    color: white;
+    word-break: break-all;
+}
+
 .pixel { 
     font-family: 'VGA';
     display: block;

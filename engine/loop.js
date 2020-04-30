@@ -1,18 +1,21 @@
 var request
 const state = require('./state')
 const mapping =  require('./mapping')
-const rendering = require('./rendering')
+const rendering = require('./rendering/render-classic')
 const settings = require ('./settings')
 const inputs = require('./input')
 const control = require('./control')
+const util = require('./util')
 
-const RayCast = require('./types/raycast')
+const ClassicCast = require('./types/classicCast')
+
 
 var framer = 0
 
 var lastFrame
 
 module.exports = () => {
+
 
     const performAnimation = (timestamp) => {
         let delta = timestamp - lastFrame
@@ -28,7 +31,7 @@ module.exports = () => {
             let orientation = state.getDirection()
             //Get the number of rays to cast from the settings
             //Get the field of view to determine what our range of angles are
-            let columns = settings.get('resolution')[0]
+            let reso = settings.get('resolution')
             let fov = settings.get('fov')
             let viewDist = settings.get('view distance')
     
@@ -38,20 +41,21 @@ module.exports = () => {
             //Lower and upper angles that we scan between
             let lowerAngle = orientation - halfFov
             let upperAngle = orientation + halfFov
-    
+
+  
             //Retrieve the angle that is going to be scanned
             function getAngle(i){
-                return (((upperAngle - lowerAngle) / columns) * i ) + lowerAngle
+                return (((upperAngle - lowerAngle) / reso[0]) * i ) + lowerAngle
             }
     
             let hits = []
     
-            for(var i = 0; i < columns; i++){
-                hits.push(RayCast(position, getAngle(i), viewDist))
+            for(var i = 0; i < reso[0]; i++){
+                colData = ClassicCast(position, getAngle(i), viewDist)
+                
+                rendering.RenderColumn(i, colData)
             }
             
-            // update the screen
-            rendering.drawWorld(hits)
             framer++
             if(framer > 1000)
                 framer = 0

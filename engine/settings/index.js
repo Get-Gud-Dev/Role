@@ -12,6 +12,7 @@ module.exports.set = (key, value) =>{
             settings[key] = value
         case 'resolution':
             settings[key] = value
+            state.setBlockScales()
         break;
         case 'font size':
             game.style.fontSize = value
@@ -22,6 +23,7 @@ module.exports.set = (key, value) =>{
         break;
         case "fov":
             settings[key] = Utility.degreesToRadians(value)
+            state.setBlockScales()
         break;
         default:
             settings[key] = value

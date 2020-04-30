@@ -1,12 +1,13 @@
-const Raycast = require('../types/raycast')
+const Raycast = require('../types/columnCast')
 const util = require('../util')
 const State = require('../state')
+const settings = require('../settings')
 
 var mapLoaded = false
 
-var mapData
 var mapHeader
 var blockData
+var heightMap
 var mapCharacters
 var mapEntities
 
@@ -15,7 +16,7 @@ var mapEntities
  */
 module.exports.loadMap = (data) => {
     mapHeader = data.header
-    mapData = data.data
+    heightMap = data.data
     blockData = data.block
     mapLoaded = true
 }
@@ -32,15 +33,13 @@ module.exports.checkForCharacterHit = (x, y) => {
     }
 }
 
+
 module.exports.checkForHit = (x, y) =>{
-    let hits = []
     //first see if we hit any objects
-
-
     let roundedCoordinates = [Math.floor(x), Math.floor(y)]
 
-    if(mapData[roundedCoordinates[0]] != null){
-        let blockValue = mapData[roundedCoordinates[0]][roundedCoordinates[1]]
+    if(heightMap[roundedCoordinates[0]] != null){
+        let blockValue = heightMap[roundedCoordinates[0]][roundedCoordinates[1]]
         
         return blockValue
 
@@ -55,11 +54,13 @@ module.exports.collisionCheck = (x, y) => {
 
     let roundedCoordinates = [Math.floor(x), Math.floor(y)]
 
+
+
     if(oldBlock[0] == roundedCoordinates[0] && oldBlock[1] == roundedCoordinates[1])
         return false
     else{
-        let blockValue = mapData[roundedCoordinates[0]][roundedCoordinates[1]]
-        if(blockData[blockValue].height <= (position.y + State.getStepHeight())){
+        let blockValue = heightMap[roundedCoordinates[0]][roundedCoordinates[1]]
+        if(blockValue[0] <= (position.y + State.getStepHeight())){
             return false
         }
         else
@@ -67,6 +68,15 @@ module.exports.collisionCheck = (x, y) => {
     }
 
     
+}
+
+module.exports.getGroundLevel = (position) => {
+    if(heightMap == null)
+        return
+    let roundedCoordinates = [Math.floor(position.x), Math.floor(position.z)]
+    let groundlevel = heightMap[roundedCoordinates[0]][roundedCoordinates[1]][0]
+    settings.get('debug').innerHTML = (groundlevel)
+    return groundlevel
 }
 
 function pointInCircle(cX, cY, radius, x, y) {

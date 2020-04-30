@@ -2,7 +2,6 @@ const settings = require('../settings')
 const state = require('../state')
 const tags = require('./tags')
 const util = require('../util')
-
 const Renderer = require('retro-render')
 
 var gameRenderer
@@ -39,6 +38,25 @@ module.exports.drawWorld = (hits) => {
         }
 
 
+    }
+}
+
+module.exports.drawColumn = (row, hits) => {
+    for (var hitIndex in hits){
+        let hit = hits[hitIndex]
+        let color
+        
+        if(hit == null)
+            color = "#2222BB"
+        else{
+
+            if(hit.hit == 1)
+                color == "#222222"
+            else if(hit.hit == 0)
+                color = "#BBBBBB"
+    
+            }
+            gameRenderer.screen.rowPixels[row - 1][hitIndex].firstChild.style.color = util.changeColor(color, 0)
     }
 }
 
