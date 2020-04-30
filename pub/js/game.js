@@ -93,7 +93,7 @@ GameState.setEyePoint(1.85)
 
 // Load the map
 Settings.set('resolution', [75, 22])
-Settings.set('fov', 90)
+Settings.set('fov', 70)
 Settings.set('view distance', 50)
 Settings.set('ray jump', 0.3)
 Settings.set('debug', document.getElementById('debug'))
