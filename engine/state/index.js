@@ -9,8 +9,8 @@ var playerState = {
     pixelRatio:null,
     grounded: true,
 
-    runSpeed:0.5,
-    maxSpeed:1,
+    runSpeed:0.2,
+    maxSpeed:4,
     stepHeight:0.6,
 
     rayDistances:[],

@@ -48,7 +48,7 @@ module.exports.applyMotion = (delta) => {
 
 
         let squareMag = ( (velocity.x + projectedHXV + projectedVXV) ** 2 ) + ((velocity.z + projectedHZV + projectedVZV ) ** 2)
-        if(  (Math.sqrt(squareMag)) <= state.getMaxSpeed()){
+        if(  squareMag <= state.getMaxSpeed() * 0.001){
             velocity.x += projectedHXV + projectedVXV
             velocity.z += projectedHZV + projectedVZV
         }
@@ -86,13 +86,13 @@ const input = require('./input')
 const Vector3 = require('./types/vector3')
 
 // Configure a player
-GameState.setPosition(4,0,7)
+GameState.setPosition(5,0,7)
 GameState.setDirection(util.north)
 GameState.setPixelRatio(0.5)
 GameState.setEyePoint(1.85)
 
 // Load the map
-Settings.set('resolution', [75, 22])
+Settings.set('resolution', [100, 20])
 Settings.set('fov', 70)
 Settings.set('view distance', 50)
 Settings.set('ray jump', 0.3)
@@ -100,14 +100,14 @@ Settings.set('debug', document.getElementById('debug'))
 let temporaryMapHeader = {name:"Test map", blockSize:3, blockHeight:2.5}
 
 let temporaryMapData = [ 
-    [[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0]],
-    [[4,0],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[4,0]],
-    [[4,0],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[4,0]],
-    [[4,0],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[4,0]],
-    [[4,0],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[4,0]],
-    [[4,0],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[4,0]],
-    [[4,0],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[4,0]],
-    [[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0],[4,0]]
+    [[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0]],
+    [[5,0],[0,5],[0,5],[0,5],[0,5],[0,5],[0,5],[0,5],[0,5],[5,0]],
+    [[5,0],[0,5],[0,5],[0,5],[0,5],[0,5],[0,5],[0,5],[0,5],[5,0]],
+    [[5,0],[0,5],[0,5],[0,5],[0,5],[0,5],[0,5],[0,5],[0,5],[5,0]],
+    [[5,0],[0,5],[0.5,4.5],[1,4],[2,3],[0,5],[0,5],[0,5],[0,5],[5,0]],
+    [[5,0],[0,5],[0,5],[0,5],[0,5],[0,5],[0,5],[0,5],[0,5],[5,0]],
+    [[5,0],[0,5],[0,5],[0,5],[0,5],[0,5],[0,5],[0,5],[0,5],[5,0]],
+    [[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0],[5,0]]
 ]
 
 let temporaryMapColours = [
@@ -358,7 +358,7 @@ module.exports.getGroundLevel = (position) => {
         return
     let roundedCoordinates = [Math.floor(position.x), Math.floor(position.z)]
     let groundlevel = heightMap[roundedCoordinates[0]][roundedCoordinates[1]][0]
-    settings.get('debug').innerHTML = (groundlevel)
+    //settings.get('debug').innerHTML = (groundlevel)
     return groundlevel
 }
 
@@ -389,19 +389,10 @@ module.exports.RenderColumn = (column, columnData) => {
 
     let blockScale = state.getBlockScale()
 
-    let eyeLine = Math.floor(resolution[1] / 2) - 1
+    let eyeLine = Math.floor(resolution[1] / 2)
+  
+    let renderedHeight = resolution[1]
 
-    // The upper and lower screen bounds are the
-    // highest and lowest rows that can still be
-    // drawn on.
-    let topPixelsDrawn = 0
-    let bottomPixelsDrawn = 0
-
-    let renderData = []
-
-    renderData.length = resolution[1]
-    //Walls are detected closeset to furthest in chunks
-    let sectionData = []
     for (var wallID in columnData) {
 
         //Wall height data
@@ -418,18 +409,24 @@ module.exports.RenderColumn = (column, columnData) => {
 
         // distance from the eye to the floor line
         let floorOffset = state.getEyeCoordinate() - floorLine
-        let floorOffsetPixels = Math.round((util.calculateApparentSize(floorOffset, distance)/blockScale))
 
+
+        let floorOffsetPixels = Math.round((util.calculateApparentSize(floorOffset, distance)/blockScale))
+        
+  
         let ceilingOffset = state.getEyeCoordinate() - ceilingLine
         let ceilingOffsetPixels = Math.round((util.calculateApparentSize(ceilingOffset, distance)/ blockScale))
 
         // Everything on and below this pixel is wall
-        let floorOffsetScreenPosition =  Math.min( Math.max( eyeLine + floorOffsetPixels , 0 ), resolution[1] - 1 ) 
- 
-        let ceilingOffsetScreenPosition = Math.min( Math.max( eyeLine + ceilingOffsetPixels , 0 ), resolution[1] - 1 ) 
+        let floorOffsetScreenPosition =  eyeLine + floorOffsetPixels 
+        let ceilingOffsetScreenPosition = eyeLine + ceilingOffsetPixels
 
         let farFloorOffsetPixels = Math.round((util.calculateApparentSize(floorOffset, distance + sectionDepth)/ blockScale))
         let farCeilingOffestPixels = Math.round((util.calculateApparentSize(ceilingOffset , distance + sectionDepth)/ blockScale))
+        
+        floorOffsetScreenPosition =  Math.min( Math.max( floorOffsetScreenPosition, 0 ), resolution[1] - 1 ) 
+ 
+        ceilingOffsetScreenPosition = Math.min( Math.max( ceilingOffsetScreenPosition , 0 ), resolution[1] - 1 ) 
 
 
         //Everything on and below this pixel floor until you hit the wall
@@ -437,34 +434,49 @@ module.exports.RenderColumn = (column, columnData) => {
         let farCeilingOffsetScreenPosition = Math.min( Math.max( eyeLine + farCeilingOffestPixels , 0 ), resolution[1] - 1 ) 
 
 
-        let topPixelsTemp = 0
-        let bottomPixelsTemp = 0
 
-        for (let i = farFloorOffsetScreenPosition; i < resolution[1] - 1 - bottomPixelsDrawn; i++) {
+        let lowestRender = renderedHeight;
+        let pixelDistance = distance
+        for (let i = farFloorOffsetScreenPosition; i <= floorOffsetScreenPosition; i++) {
             let color = "#FFFFFF"
-            if (i >= floorOffsetScreenPosition) {
-                color = '#444444'
-            }
-            if (i < resolution[1] - 1 && i >= 0) {
-                gameRenderer.screen.columnPixels[column][i].firstChild.style.color = util.changeColor(color, 0) //(pixelDistance))
-                bottomPixelsTemp++
-            }
-        }
-
-        for (let i = topPixelsDrawn; i < farCeilingOffsetScreenPosition; i++) {
-            let color = "#444444"
-            let pixelDistance = distance
-            if (i >= ceilingOffsetScreenPosition) {
-                color = '#FFFFFF'
-            }
-            if (i < resolution[1] - 1 && i >= 0) {
-                gameRenderer.screen.columnPixels[column][i].firstChild.style.color = util.changeColor(color, 0)//(pixelDistance))
-                topPixelsTemp++
+            pixelDistance = distance
+            if(i <= renderedHeight)
+            {
+                if(i < lowestRender)
+                    lowestRender = i
+                gameRenderer.screen.columnPixels[column][i].firstChild.style.color = util.changeColor(color,0)
             }
         }
 
-        topPixelsDrawn += topPixelsTemp
-        bottomPixelsDrawn += bottomPixelsTemp
+        for(let i = floorOffsetScreenPosition; i < renderedHeight; i++){
+            let color = '#444444'
+            pixelDistance = distance
+            if(i < renderedHeight)
+            {
+                if(i<lowestRender)
+                    lowestRender = i
+                gameRenderer.screen.columnPixels[column][i].firstChild.style.color = util.changeColor(color, -(distance ** 2))
+            }   
+        }
+
+        for (let i = ceilingOffsetScreenPosition; i <= farCeilingOffsetScreenPosition; i++) {
+            color = '#FFFFFF'
+            if(i< renderedHeight){
+                gameRenderer.screen.columnPixels[column][i].firstChild.style.color = util.changeColor(color,0)
+
+            }
+
+            
+        }
+
+        renderedHeight = lowestRender
+        if(column == 0)
+        {
+            if(wallID == 0)
+                settings.get('debug').innerHTML = (renderedHeight + " floor: " + floorOffsetScreenPosition +" " + farFloorOffsetScreenPosition + " ceil:" + ceilingOffsetScreenPosition + " " + farCeilingOffsetScreenPosition + " floor offset: " + floorOffsetPixels)
+            else
+                settings.get('debug').innerHTML += "<br>col2: " + (renderedHeight + " floor: " + floorOffsetScreenPosition +" " + farFloorOffsetScreenPosition + " ceil:" + ceilingOffsetScreenPosition + " " + farCeilingOffsetScreenPosition + " floor offset: " + floorOffsetPixels)
+        }
         distance += sectionDepth
     }
 
@@ -518,8 +530,8 @@ var playerState = {
     pixelRatio:null,
     grounded: true,
 
-    runSpeed:0.5,
-    maxSpeed:1,
+    runSpeed:0.2,
+    maxSpeed:4,
     stepHeight:0.6,
 
     rayDistances:[],

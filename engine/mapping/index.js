@@ -75,7 +75,7 @@ module.exports.getGroundLevel = (position) => {
         return
     let roundedCoordinates = [Math.floor(position.x), Math.floor(position.z)]
     let groundlevel = heightMap[roundedCoordinates[0]][roundedCoordinates[1]][0]
-    settings.get('debug').innerHTML = (groundlevel)
+    //settings.get('debug').innerHTML = (groundlevel)
     return groundlevel
 }
 

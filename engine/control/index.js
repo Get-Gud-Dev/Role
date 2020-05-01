@@ -47,7 +47,7 @@ module.exports.applyMotion = (delta) => {
 
 
         let squareMag = ( (velocity.x + projectedHXV + projectedVXV) ** 2 ) + ((velocity.z + projectedHZV + projectedVZV ) ** 2)
-        if(  (Math.sqrt(squareMag)) <= state.getMaxSpeed()){
+        if(  squareMag <= state.getMaxSpeed() * 0.001){
             velocity.x += projectedHXV + projectedVXV
             velocity.z += projectedHZV + projectedVZV
         }
