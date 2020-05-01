@@ -393,7 +393,7 @@ module.exports.RenderColumn = (column, columnData) => {
   
     let renderedHeight = resolution[1]
 
-    for (var wallID in columnData) {
+    for (var wallID in columnData[0]) {
 
         //Wall height data
         let wall = columnData[0][wallID]
@@ -473,7 +473,7 @@ module.exports.RenderColumn = (column, columnData) => {
         if(column == 0)
         {
             if(wallID == 0)
-                settings.get('debug').innerHTML = (renderedHeight + " floor: " + floorOffsetScreenPosition +" " + farFloorOffsetScreenPosition + " ceil:" + ceilingOffsetScreenPosition + " " + farCeilingOffsetScreenPosition + " floor offset: " + floorOffsetPixels)
+                settings.get('debug').innerHTML = ("There are x Items: " + columnData[0].length + "." + renderedHeight + " floor: " + floorOffsetScreenPosition +" " + farFloorOffsetScreenPosition + " ceil:" + ceilingOffsetScreenPosition + " " + farCeilingOffsetScreenPosition + " floor offset: " + floorOffsetPixels)
             else
                 settings.get('debug').innerHTML += "<br>col2: " + (renderedHeight + " floor: " + floorOffsetScreenPosition +" " + farFloorOffsetScreenPosition + " ceil:" + ceilingOffsetScreenPosition + " " + farCeilingOffsetScreenPosition + " floor offset: " + floorOffsetPixels)
         }
